@@ -1,0 +1,104 @@
+{
+  "profiles": [
+    {
+      "id": "AURELIA",
+      "name": "Republic of Aurelia",
+      "description": "An idealistic democratic republic struggling to maintain stability under population pressure.",
+      "tags": {
+        "governance": "Democratic Republic",
+        "economic_level": "Mid-income",
+        "population_pressure": "High",
+        "resource_dependence": "Low",
+        "global_influence": "Low"
+      },
+      "initial_metrics": {
+        "stability": 50,
+        "public_trust": 65,
+        "resources": 55,
+        "ethics": 70
+      },
+      "core_weakness": "stability",
+      "first_crisis_hint": "Rising unemployment and urban overcrowding have triggered mass protests."
+    },
+    {
+      "id": "CALDRIA",
+      "name": "Federation of Caldria",
+      "description": "A powerful industrial federation with immense wealth but questionable ethical practices.",
+      "tags": {
+        "governance": "Technocratic Federation",
+        "economic_level": "High-income",
+        "population_pressure": "Medium",
+        "resource_dependence": "High",
+        "global_influence": "High"
+      },
+      "initial_metrics": {
+        "stability": 70,
+        "public_trust": 50,
+        "resources": 80,
+        "ethics": 45
+      },
+      "core_weakness": "ethics",
+      "first_crisis_hint": "Whistleblowers expose widespread industrial pollution and worker exploitation."
+    },
+    {
+      "id": "NORVALE",
+      "name": "Kingdom of Norvale",
+      "description": "A centralized monarchy with strong order but weakening public legitimacy.",
+      "tags": {
+        "governance": "Centralized Monarchy",
+        "economic_level": "Upper-middle-income",
+        "population_pressure": "Low",
+        "resource_dependence": "Medium",
+        "global_influence": "Medium"
+      },
+      "initial_metrics": {
+        "stability": 80,
+        "public_trust": 45,
+        "resources": 65,
+        "ethics": 40
+      },
+      "core_weakness": "public_trust",
+      "first_crisis_hint": "A royal succession controversy sparks reformist protests."
+    },
+    {
+      "id": "SAHARI",
+      "name": "Union of Sahari",
+      "description": "A fragile developing state facing economic hardship and resource scarcity.",
+      "tags": {
+        "governance": "Transitional Government",
+        "economic_level": "Low-income",
+        "population_pressure": "High",
+        "resource_dependence": "Very High",
+        "global_influence": "Low"
+      },
+      "initial_metrics": {
+        "stability": 40,
+        "public_trust": 50,
+        "resources": 35,
+        "ethics": 55
+      },
+      "core_weakness": "resources",
+      "first_crisis_hint": "A failed harvest and fuel shortages threaten national food security."
+    },
+    {
+      "id": "VELMORA",
+      "name": "Maritime State of Velmora",
+      "description": "A globally connected trading state highly dependent on international supply chains.",
+      "tags": {
+        "governance": "Parliamentary State",
+        "economic_level": "High-income",
+        "population_pressure": "Low",
+        "resource_dependence": "Very High",
+        "global_influence": "Very High"
+      },
+      "initial_metrics": {
+        "stability": 60,
+        "public_trust": 60,
+        "resources": 70,
+        "ethics": 65
+      },
+      "core_weakness": "external_dependency",
+      "first_crisis_hint": "A major international trade route disruption threatens imports and exports."
+    }
+  ]
+}
