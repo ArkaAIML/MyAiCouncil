@@ -1,4 +1,4 @@
-from app.agents.stability_agent import stability_agent
+from app.agents.public_trust_agent import public_trust_agent
 
 context = """
 Country: Federation of Caldria
@@ -6,10 +6,10 @@ Current metrics: Stability: 60, Public Trust: 55, Resources: 70, Ethics: 40
 Problem: A local militia has seized a grain silo and is distributing food for free.
 """
 
-print("Running Stability Agent...\n")
+print("Running public trust Agent...\n")
 
 # Call the agent
-response = stability_agent.run(context)
+response = public_trust_agent.run(context)
 
 # 1. To see the actual JSON/Text response:
 print("--- Agent's Decision ---")

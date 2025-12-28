@@ -2,7 +2,6 @@ import json
 import random
 from pathlib import Path
 
-
 # Path to the country profiles JSON
 BASE_DIR = Path(__file__).resolve().parent.parent
 CONFIG_PATH = BASE_DIR / "config" / "country_profiles.json"
@@ -35,6 +34,39 @@ def select_random_country() -> dict:
 
     return random.choice(profiles)
 
+
+# --- Move this outside so it can be imported ---
+CRISES = [
+    {
+        "title": "Economic Collapse",
+        "description": "Inflation is rising rapidly, unemployment is high, and public anger is growing."
+    },
+    {
+        "title": "Border Conflict",
+        "description": "A neighboring nation has mobilized troops near the border, raising fears of war."
+    },
+    {
+        "title": "Energy Shortage",
+        "description": "Fuel reserves are critically low, causing power outages nationwide."
+    },
+    {
+        "title": "Civil Unrest",
+        "description": "Mass protests have erupted after allegations of government corruption."
+    },
+    {
+        "title": "Pandemic Outbreak",
+        "description": "A fast-spreading disease threatens public health and economic stability."
+    }
+]
+
+
+def select_random_crisis():
+    return random.choice(CRISES)
+
+
 if __name__ == "__main__":
     country = select_random_country()
     print(country["name"])
+
+    crisis = select_random_crisis()
+    print(crisis["title"])
