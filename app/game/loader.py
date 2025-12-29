@@ -35,7 +35,7 @@ def select_random_country() -> dict:
     return random.choice(profiles)
 
 
-# --- Move this outside so it can be imported ---
+
 CRISES = [
     {
         "title": "Economic Collapse",
