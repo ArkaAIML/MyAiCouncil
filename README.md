@@ -98,8 +98,7 @@ The system follows a clean separation between frontend, backend, and AI logic.
 │ - Trust Agent │
 └──────────────────────┘
 
-yaml
-Copy code
+
 
 ---
 
@@ -126,8 +125,7 @@ MyAiCouncil/
 ├── README.md
 └── requirements.txt
 
-yaml
-Copy code
+
 
 ---
 
@@ -137,8 +135,7 @@ API Endpoints
 ### Start Game
 POST /start
 
-css
-Copy code
+
 
 Initializes a new game session.
 
@@ -150,15 +147,14 @@ Response:
   "metrics": {}
 }
 Get Advisor Actions
-bash
-Copy code
+
 GET /agents
 Returns player-friendly policy actions only.
 
 Response:
 
-json
-Copy code
+
+
 {
   "actions": {
     "stability": "Action text...",
@@ -168,15 +164,13 @@ Copy code
   }
 }
 Choose Action
-bash
-Copy code
+
 POST /choose/{agent_key}
 Applies the selected advisor’s decision.
 
 Response:
 
-json
-Copy code
+
 {
   "chosen_action": "...",
   "updated_metrics": {}
@@ -205,8 +199,7 @@ The backend requires an API key for the LLM provider.
 
 Example:
 
-bash
-Copy code
+
 export GOOGLE_API_KEY=your_api_key_here
 The frontend does not require an API key.
 
@@ -236,6 +229,7 @@ The game is designed to force uncomfortable trade-offs, not reward min-maxing.
 
 License
 For educational and experimental purposes.
+
 
 
 
