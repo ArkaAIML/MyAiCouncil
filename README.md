@@ -1,148 +1,242 @@
 MyAiCouncil
+===========
 
-MyAiCouncil is an interactive, AI-driven governance simulation where multiple specialized AI advisors propose policy actions during national crises — and the player must choose wisely to keep the nation stable.
-Instead of a single AI making decisions, MyAiCouncil models a council of competing advisors, each optimizing for a different priority such as stability, economy, ethics, or public trust.
+A single-player, policy-decision simulation game powered by multiple AI advisors.  
+The player governs a fictional country through crises by choosing between competing policy recommendations, each affecting national metrics such as stability, public trust, resources, and ethics.
 
-Core Idea
+---
 
-Real-world governance is not about one “correct” decision — it’s about trade-offs.
+Core Concept
+------------
 
-In MyAiCouncil:
+**MyAiCouncil** simulates decision-making under uncertainty.
 
-Each AI agent represents a policy lens
+- The player represents the head of government.
+- A country and an initial crisis are generated at the start.
+- Multiple AI advisor agents independently propose one concrete policy action.
+- Each action affects national metrics positively and negatively.
+- The player selects exactly one action per round.
+- Metrics update internally and determine success or failure.
 
-Every suggested action helps some metrics and harms others
+The system emphasizes trade-offs, ethical dilemmas, and long-term consequences rather than optimal play.
 
-The player must balance competing advice to survive the crisis
+---
 
-🧠 Advisor Agents
+Gameplay Overview
+-----------------
 
-Each round, four independent AI agents analyze the same situation:
+1. Start a new game
+2. Receive:
+   - Country profile
+   - Initial crisis
+   - Starting metrics
+3. Consult the AI council
+4. Choose exactly one policy action
+5. Metrics update
+6. (Future) Proceed to next round or end condition
 
-Agent	Focus
-🛡️ Stability Advisor	Law, order, internal security
-💰 Economy Advisor	Resources, industry, financial survival
-⚖️ Ethics & Human Rights Advisor	Civil liberties, fairness, moral governance
-🗳️ Public Trust Advisor	Legitimacy, popularity, social cohesion
+---
 
-Each agent proposes one concrete policy action along with its impact on national metrics.
+Game Metrics
+------------
 
-📊 Game Metrics
+Each decision affects four core metrics:
 
-The nation is governed through four core metrics:
+| Metric        | Description |
+|--------------|-------------|
+| Stability    | Internal order, unrest, and political control |
+| Public Trust | Citizen confidence in government legitimacy |
+| Resources    | Economic strength and material capacity |
+| Ethics       | Human rights, fairness, and moral governance |
 
-Stability
+All metrics are bounded between **0 and 100**.
 
-Public Trust
+---
 
-Resources
+AI Advisor Agents
+-----------------
 
-Ethics
+Each advisor represents a distinct governing priority and operates independently.
 
-Each decision modifies these values positively or negatively.
-Metrics are internally clamped between 0–100.
+| Agent | Focus Area | Typical Bias |
+|------|------------|--------------|
+| Stability Advisor | Law, order, control | Authoritarian tendencies |
+| Economy Advisor | Growth, efficiency | Resource-heavy trade-offs |
+| Ethics Advisor | Human rights, fairness | High moral cost tolerance |
+| Public Trust Advisor | Legitimacy, perception | Popular but risky decisions |
 
-🕹️ Current Gameplay Flow (Demo Version)
+Agents receive the same game state but produce different recommendations.
 
-Start a new game
+---
 
-A country profile is randomly selected
+System Architecture
+-------------------
 
-A national crisis is triggered
+The system follows a clean separation between frontend, backend, and AI logic.
 
-AI advisors propose policy actions
+┌──────────────────────┐
+│ Streamlit UI │
+│ (Player Interface) │
+└──────────┬───────────┘
+│ HTTP Requests
+▼
+┌──────────────────────┐
+│ FastAPI Backend │
+│ │
+│ - Game State │
+│ - API Endpoints │
+│ - Decision Logic │
+└──────────┬───────────┘
+│ Prompts
+▼
+┌──────────────────────┐
+│ AI Advisor Agents │
+│ │
+│ - Stability Agent │
+│ - Economy Agent │
+│ - Ethics Agent │
+│ - Trust Agent │
+└──────────────────────┘
 
-The player chooses one action
+yaml
+Copy code
 
-National metrics update accordingly
+---
 
-(Multi-round survival gameplay is planned but not yet implemented)
+Project Structure
+-----------------
 
-🏗️ Project Architecture
 MyAiCouncil/
 │
 ├── app/
-│   ├── agents/               # Individual AI advisors
-│   │   ├── stability_agent.py
-│   │   ├── economy_agent.py
-│   │   ├── ethics_agent.py
-│   │   └── public_trust_agent.py
-│   │
-│   ├── game/
-│   │   ├── loader.py          # Loads countries & crises
-│   │   ├── state2.py          # Game state model
-│   │   └── engine2.py         # Game logic (current version)
-│   │
-│   └── main2.py               # FastAPI backend
+│ ├── agents/
+│ │ ├── stability_agent.py
+│ │ ├── economy_agent.py
+│ │ ├── ethics_agent.py
+│ │ └── public_trust_agent.py
+│ │
+│ ├── game/
+│ │ ├── loader.py
+│ │ ├── state2.py
+│ │ └── engine2.py
+│ │
+│ └── main2.py
 │
-├── frontend/
-│   └── streamlit_app.py       # Streamlit UI (WIP)
-│
-├── config/
-│   └── country_profiles.json
-│
-└── README.md
+├── streamlit_app.py
+├── README.md
+└── requirements.txt
 
-##🔌 Backend API (FastAPI)
-Endpoint	Method	Description
-/start	POST	Start a new game
-/agents	GET	Get advisor policy suggestions
-/choose/{agent_key}	POST	Choose an advisor’s action
+yaml
+Copy code
 
-Swagger UI is available at:
+---
 
-http://127.0.0.1:8000/docs
+API Endpoints
+-------------
 
-🖥️ Frontend (Streamlit)
+### Start Game
+POST /start
 
-A simple Streamlit frontend is included to:
+css
+Copy code
 
-display the country and crisis
+Initializes a new game session.
 
-show advisor-recommended actions
+Response:
+```json
+{
+  "country": {},
+  "crisis": {},
+  "metrics": {}
+}
+Get Advisor Actions
+bash
+Copy code
+GET /agents
+Returns player-friendly policy actions only.
 
-allow the player to choose a policy
+Response:
 
-⚠️ The frontend is functional but still under refinement.
+json
+Copy code
+{
+  "actions": {
+    "stability": "Action text...",
+    "economy": "Action text...",
+    "ethics": "Action text...",
+    "public_trust": "Action text..."
+  }
+}
+Choose Action
+bash
+Copy code
+POST /choose/{agent_key}
+Applies the selected advisor’s decision.
 
-🚀 How to Run Locally
-1️⃣ Backend
-uvicorn app.main2:app --reload
+Response:
 
-2️⃣ Frontend
-streamlit run frontend/streamlit_app.py
+json
+Copy code
+{
+  "chosen_action": "...",
+  "updated_metrics": {}
+}
+Frontend
+The frontend is implemented using Streamlit.
 
-🔐 Environment Variables
+Displays country, crisis, and metrics
 
-The AI agents require an API key for the underlying LLM provider.
+Shows only human-readable actions
 
-Create a .env file:
+Allows selection of one policy per round
 
-GOOGLE_API_KEY=your_api_key_here
+Updates metrics after decision
+
+The frontend does not expose:
+
+Raw agent JSON
+
+Internal metric deltas
+
+Prompt engineering logic
+
+Environment Variables
+The backend requires an API key for the LLM provider.
+
+Example:
+
+bash
+Copy code
+export GOOGLE_API_KEY=your_api_key_here
+The frontend does not require an API key.
+
+Future Roadmap
+Multi-round gameplay with fixed turn limit
+
+Win / loss conditions based on metric thresholds
+
+Persistent session storage
+
+Difficulty presets
+
+Visual analytics for metric trends
+
+Multiplayer or observer mode
+
+Design Philosophy
+Decisions should never be strictly optimal
+
+Every action has hidden costs
+
+Ethical choices may weaken power
+
+Powerful choices may erode legitimacy
+
+The game is designed to force uncomfortable trade-offs, not reward min-maxing.
+
+License
+For educational and experimental purposes.
 
 
-The backend reads the API key — the frontend does not need direct access.
 
-🧭 Roadmap
-
-Planned improvements:
-
-Multi-round gameplay (fixed number of turns)
-
-Win/Loss conditions based on metrics
-
-Better UI feedback and animations
-
-Agent disagreement visualization
-
-Persistent game sessions
-
-🧑‍💻 Author
-
-Built by Arka Banerjee
-Computer Science & Engineering (AI/ML)
-
-📜 License
-
-This project is for educational and demonstration purposes.
 
