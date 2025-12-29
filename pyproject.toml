@@ -11,5 +11,6 @@ dependencies = [
     "google-generativeai>=0.8.6",
     "pydantic>=2.12.5",
     "python-dotenv>=1.2.1",
+    "streamlit>=1.52.2",
     "uvicorn>=0.40.0",
 ]

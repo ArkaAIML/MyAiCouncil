@@ -8,12 +8,9 @@ Problem: A local militia has seized a grain silo and is distributing food for fr
 
 print("Running public trust Agent...\n")
 
-# Call the agent
+
 response = public_trust_agent.run(context)
 
-# 1. To see the actual JSON/Text response:
+
 print("--- Agent's Decision ---")
 print(response.content) 
-
-# 2. If you want to see the "thought process" or history:
-# response.messages contains the prompts AND the responses.
